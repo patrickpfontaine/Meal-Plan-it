@@ -9,6 +9,8 @@ import {
   ScrollView,
   Modal,
   StyleProp,
+  Linking,
+  Alert,
 } from "react-native";
 import { useRouter } from "expo-router";
 import { Border, Color, FontFamily, FontSize } from "../app/GlobalStyles";
@@ -30,6 +32,7 @@ interface Recipe {
   image: string;
   readyInMinutes: number;
   servings: number;
+  sourceUrl?: any;
 }
 
 interface DayRecipe {
@@ -58,6 +61,7 @@ interface EventCardProps {
   time?: string;
   onAdd?: () => void;
   onDelete?: () => void;
+  recipe?: DayRecipe;
 }
 
 const EventCard: React.FC<EventCardProps> = ({
@@ -67,6 +71,7 @@ const EventCard: React.FC<EventCardProps> = ({
   time,
   onAdd,
   onDelete,
+  recipe,
 }) => {
   const dayBackgrounds = {
     Sun: require("../app/images/SunColorBox.png"),
@@ -76,6 +81,16 @@ const EventCard: React.FC<EventCardProps> = ({
     Thu: require("../app/images/ThuColorBox.png"),
     Fri: require("../app/images/FriColorBox.png"),
     Sat: require("../app/images/SatColorBox.png"),
+  };
+  const handleRecipePress = (recipe: any) => {
+    const recipeUrl = recipe.recipe.sourceUrl;
+    if (recipeUrl) {
+      Linking.openURL(recipeUrl).catch((err) =>
+        Alert.alert("Error", "Failed to open the recipe URL.")
+      );
+    } else {
+      Alert.alert("Error", "Recipe URL not available");
+    }
   };
 
   return (
@@ -87,13 +102,15 @@ const EventCard: React.FC<EventCardProps> = ({
       />
       {title && time ? (
         <>
-          <Text style={styles.eventText}>
-            <Text style={styles.eventTitle}>
-              {title}
-              {"\n"}
+          <TouchableOpacity onPress={() => handleRecipePress(recipe)}>
+            <Text style={styles.eventText}>
+              <Text style={styles.eventTitle}>
+                {title}
+                {"\n"}
+              </Text>
+              <Text style={styles.eventTime}>{time}</Text>
             </Text>
-            <Text style={styles.eventTime}>{time}</Text>
-          </Text>
+          </TouchableOpacity>
           <TouchableOpacity style={styles.actionButton} onPress={onDelete}>
             <FontAwesomeIcon icon={faTrashCan} style={styles.icon} />
           </TouchableOpacity>
@@ -197,6 +214,7 @@ const CalendarPage: React.FC<{ startDate: Date }> = ({ startDate }) => {
                   day={day}
                   date={date}
                   top={index * 75 + 12}
+                  recipe={dayRecipe}
                   title={dayRecipe?.recipe.title}
                   time={
                     dayRecipe?.recipe.readyInMinutes
