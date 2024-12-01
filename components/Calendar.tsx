@@ -8,14 +8,16 @@ import {
   SafeAreaView,
   ScrollView,
   Modal,
+  StyleProp,
 } from "react-native";
 import { useRouter } from "expo-router";
 import { Border, Color, FontFamily, FontSize } from "../app/GlobalStyles";
 import { useRecipeContext } from "@/app/config/RecipeContext";
 import { ThemedButton } from "@/components/Button";
 import dayjs from "dayjs";
-import { faCircle } from "@fortawesome/free-regular-svg-icons";
+import { faCircle, faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { faAdd } from "@fortawesome/free-solid-svg-icons";
 
 const DAYS_OF_WEEK = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"] as const;
 
@@ -93,20 +95,12 @@ const EventCard: React.FC<EventCardProps> = ({
             <Text style={styles.eventTime}>{time}</Text>
           </Text>
           <TouchableOpacity style={styles.actionButton} onPress={onDelete}>
-            <Image
-              style={styles.icon}
-              resizeMode="cover"
-              source={require("../app/images/delete.png")}
-            />
+            <FontAwesomeIcon icon={faTrashCan} style={styles.icon} />
           </TouchableOpacity>
         </>
       ) : (
         <TouchableOpacity style={styles.actionButton} onPress={onAdd}>
-          <Image
-            style={styles.icon}
-            resizeMode="cover"
-            source={require("../app/images/add.png")}
-          />
+          <FontAwesomeIcon icon={faAdd} style={styles.icon} />
         </TouchableOpacity>
       )}
     </View>
@@ -385,6 +379,7 @@ const styles = StyleSheet.create({
   icon: {
     width: "100%",
     height: "100%",
+    color: "rgba(34, 34, 34, 1)",
   },
   modalOverlay: {
     flex: 1,

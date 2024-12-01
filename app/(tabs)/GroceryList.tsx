@@ -14,6 +14,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faCircle } from "@fortawesome/free-regular-svg-icons";
 import {
+  faAdd,
   faCircle as faCircleFill,
   faX,
 } from "@fortawesome/free-solid-svg-icons";
@@ -103,14 +104,14 @@ export default function Component() {
         {item.isCrossOut ? (
           <FontAwesomeIcon
             icon={faCircleFill}
-            size={20}
+            size={26}
             style={{ color: "#3B4937" }}
           />
         ) : (
           <View>
             <FontAwesomeIcon
               icon={faCircle}
-              size={20}
+              size={26}
               style={{ color: "#3B4937" }}
             />
             <View style={styles.opaqueCenter}></View>
@@ -135,7 +136,7 @@ export default function Component() {
         </Text>
       )}
       <TouchableOpacity onPress={() => removeGroceryItem(item.id)}>
-        <FontAwesomeIcon icon={faX} size={12} style={{ color: "#222222" }} />
+        <FontAwesomeIcon icon={faX} size={16} style={{ color: "#222222" }} />
       </TouchableOpacity>
     </View>
   );
@@ -150,18 +151,17 @@ export default function Component() {
       >
         <Text style={styles.title}>Shopping List</Text>
         <KeyboardAvoidingView style={{ flex: 1 }}>
-          <ScrollView contentContainerStyle={styles.ingredientContainer}>
-            <FlatList
-              data={groceryList}
-              renderItem={renderItem}
-              keyExtractor={(item) => item.id}
-              ListFooterComponent={
-                <TouchableOpacity style={styles.button} onPress={handleAddItem}>
-                  <Text style={styles.buttonText}>+ Add</Text>
-                </TouchableOpacity>
-              }
-            />
-          </ScrollView>
+          <FlatList
+            data={groceryList}
+            contentContainerStyle={styles.ingredientContainer}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id}
+            ListFooterComponent={
+              <TouchableOpacity style={styles.button} onPress={handleAddItem}>
+                <Text style={styles.buttonText}>+ Add</Text>
+              </TouchableOpacity>
+            }
+          />
         </KeyboardAvoidingView>
       </SafeAreaProvider>
     </RecipeProvider>
@@ -177,14 +177,13 @@ const styles = StyleSheet.create({
   },
   ingredientContainer: {
     backgroundColor: "#b8c8a7",
-    height: 1091,
+    flex: 1,
     flexDirection: "column",
     padding: 12,
   },
   input: {
     flex: 1,
     paddingLeft: 8,
-    paddingBottom: 2,
     backgroundColor: "#b8c8a7",
     flexDirection: "row",
     fontFamily: "InterRegular",
@@ -203,8 +202,8 @@ const styles = StyleSheet.create({
     fontFamily: "InterRegular",
   },
   button: {
-    width: 70,
-    height: 30,
+    width: 85,
+    height: 35,
     borderRadius: 100,
     borderColor: "#3B4937",
     borderWidth: 1.75,
@@ -217,7 +216,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "#222222",
     fontFamily: "InterMedium",
-    fontSize: 16,
+    fontSize: 18,
   },
   completedText: {
     textDecorationLine: "line-through",
@@ -227,8 +226,8 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 1.75,
     left: 1.5,
-    height: 17,
-    width: 17,
+    height: 23,
+    width: 23,
     backgroundColor: "rgba(59,77,50,.30)",
     borderRadius: 50,
   },

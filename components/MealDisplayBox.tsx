@@ -48,13 +48,12 @@ export function MealDisplayBox({ recipes }: MealDisplayBoxProps) {
 
   return (
     <RecipeProvider>
-      <SafeAreaView>
+      <SafeAreaView style={{ flex: 1 }}>
         <FlatList
-          style={{ marginBottom: 200 }}
           data={recipes}
           keyExtractor={(item: any) => item.id.toString()} // Key for each item
           renderItem={({ item }) => (
-            <ScrollView>
+            <View>
               <View style={styles.recipeDisplayContainer}>
                 <View style={{ flexDirection: "row" }}>
                   <Text
@@ -69,7 +68,7 @@ export function MealDisplayBox({ recipes }: MealDisplayBoxProps) {
                     onPress={() => handleBookmark(item)}
                   >
                     <FontAwesomeIcon
-                      icon={isBookmark(item) ? solidBookmark : regularBookmark} // Provide correct icons
+                      icon={isBookmark(item) ? solidBookmark : regularBookmark}
                       style={{
                         color: isBookmark(item) ? "#EFBF17" : "#222222",
                       }}
@@ -91,7 +90,6 @@ export function MealDisplayBox({ recipes }: MealDisplayBoxProps) {
                     <Text style={styles.recipeSubtext2}>
                       Servings: {item.servings}
                     </Text>
-                    <Text style={styles.recipeSubtext2}>Some other info</Text>
 
                     <View style={{ alignItems: "flex-end", marginTop: 10 }}>
                       <ThemedButton
@@ -103,11 +101,9 @@ export function MealDisplayBox({ recipes }: MealDisplayBoxProps) {
                 </View>
               </View>
               <View style={{ padding: 10 }}></View>
-            </ScrollView>
+            </View>
           )}
-        >
-          <View style={{ paddingBottom: 10 }}></View>
-        </FlatList>
+        ></FlatList>
       </SafeAreaView>
     </RecipeProvider>
   );

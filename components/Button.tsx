@@ -1,6 +1,7 @@
 // CustomButton.js
 import { faBookmark } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import React from "react";
 // import React from "react";
 import {
   TouchableOpacity,

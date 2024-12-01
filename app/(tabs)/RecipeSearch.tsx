@@ -170,7 +170,9 @@ const styles = StyleSheet.create({
   },
   safeArea: {
     flex: 1,
-    padding: 20,
+    paddingLeft: 20,
+    paddingRight: 20,
+    paddingTop: 20,
   },
   header: {
     flexDirection: "row",

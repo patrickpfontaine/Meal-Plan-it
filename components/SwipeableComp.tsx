@@ -69,16 +69,16 @@ const SwipeableBoxes = () => {
   return (
     <GestureHandlerRootView style={styles.container}>
       <GestureDetector gesture={gesture}>
-        <ScrollView>
+        <View>
           <Animated.View style={[styles.boxContainer, animatedStyle]}>
             {calendarDates.map((date, index) => (
               <CalendarPage
                 key={index}
-                startDate={date.toDate()}
+                startDate={date.toDate().toString()}
               ></CalendarPage>
             ))}
           </Animated.View>
-        </ScrollView>
+        </View>
       </GestureDetector>
     </GestureHandlerRootView>
   );

@@ -43,35 +43,6 @@ const SavedRecipes: React.FC = () => {
     Keyboard.dismiss();
   };
 
-  const renderRecipeItem: ListRenderItem<Recipe> = ({ item }) => (
-    <View style={styles.recipeDisplayContainer}>
-      <Image
-        source={{ uri: item.image }}
-        style={styles.image}
-        onError={(e) =>
-          console.log("Image loading error:", e.nativeEvent.error)
-        }
-      />
-      <View style={styles.recipeInfo}>
-        <Text style={styles.recipeTitle}>{item.title}</Text>
-        <Text style={styles.recipeSubtext1}>
-          Ready in {item.readyInMinutes} minutes
-        </Text>
-        <Text style={styles.recipeSubtext2}>Servings: {item.servings}</Text>
-      </View>
-      <TouchableOpacity
-        onPress={() => removeRecipe(item.id)}
-        style={styles.bookmarkButton}
-      >
-        <Image
-          //style={styles.bookmarkButton}
-          resizeMode="cover"
-          source={require("../images/delete.png")}
-        />
-      </TouchableOpacity>
-    </View>
-  );
-
   return (
     <SafeAreaProvider style={styles.container}>
       <SafeAreaView style={styles.safeArea}>
@@ -125,7 +96,9 @@ const styles = StyleSheet.create({
   },
   safeArea: {
     flex: 1,
-    padding: 20,
+    paddingLeft: 20,
+    paddingRight: 20,
+    paddingTop: 20,
   },
   header: {
     flexDirection: "row",
