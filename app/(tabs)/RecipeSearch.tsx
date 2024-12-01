@@ -35,7 +35,6 @@ interface Recipe {
 const RecipeSearch = () => {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const { addRecipe, removeRecipe, recipeSearch, addRecipeIngredients } =
     useRecipeContext();
@@ -43,13 +42,7 @@ const RecipeSearch = () => {
   const apiKey = RECIPE_API_KEY;
 
   const handleSearch = async () => {
-    if (!searchQuery.trim()) {
-      setError("Please enter a search query");
-      return;
-    }
-
     setLoading(true);
-    setError(null);
     setRecipes([]);
     Keyboard.dismiss();
 
@@ -68,14 +61,14 @@ const RecipeSearch = () => {
       if (data.results && Array.isArray(data.results)) {
         setRecipes(data.results);
         if (data.results.length === 0) {
-          setError("No recipes found. Try a different search term.");
+          //setError("No recipes found. Try a different search term.");
         }
       } else {
         throw new Error("Invalid data format received from API");
       }
     } catch (err: any) {
       console.error("Error fetching recipes:", err);
-      setError(err.message || "An unexpected error occurred");
+      //setError(err.message || "An unexpected error occurred");
     } finally {
       setLoading(false);
     }
@@ -153,14 +146,17 @@ const RecipeSearch = () => {
             <Text style={styles.loadingText}>Loading recipes...</Text>
           </View>
         )}
-        {error && <Text style={styles.errorText}>{error}</Text>}
-        {!loading && !error && recipes.length > 0 && (
+        {!loading && recipes.length > 0 && (
           <MealDisplayBox recipes={recipes}></MealDisplayBox>
         )}
-        {!loading && !error && recipes.length === 0 && searchQuery && (
-          <Text style={styles.noResultsText}>
-            No recipes found. Try a different search term.
-          </Text>
+        {!loading && recipes.length === 0 && (
+          <View style={styles.promptContainer}>
+            <Text style={styles.promptText}>
+              {searchQuery
+                ? "No recipes found. Try a different search term."
+                : "Feeling hungry?\nSearch for a recipe to get started!"}
+            </Text>
+          </View>
         )}
       </SafeAreaView>
     </SafeAreaProvider>
@@ -214,13 +210,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#222222",
   },
-  errorText: {
-    color: "red",
-    textAlign: "center",
-    marginVertical: 20,
-    fontFamily: "InterRegular",
-    fontSize: 16,
-  },
   noResultsText: {
     textAlign: "center",
     marginVertical: 20,
@@ -266,6 +255,17 @@ const styles = StyleSheet.create({
   bookmarkButton: {
     padding: 10,
     justifyContent: "center",
+  },
+  promptContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  promptText: {
+    fontFamily: "InterRegular",
+    fontSize: 18,
+    color: "#222222",
+    textAlign: "center",
   },
 });
 

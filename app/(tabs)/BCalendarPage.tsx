@@ -6,14 +6,15 @@ import {
   Image,
   TouchableOpacity,
   SafeAreaView,
-  ScrollView,
   Modal,
+  Dimensions,
 } from "react-native";
 import { useRouter } from "expo-router";
 import { Border, Color, FontFamily, FontSize } from "../GlobalStyles";
 import { useRecipeContext } from "../config/RecipeContext";
 import { ThemedButton } from "@/components/Button";
 import SwipeableBoxes from "@/components/SwipeableComp";
+
 const DAYS_OF_WEEK = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"] as const;
 const DATES = ["27", "28", "29", "30", "31", "1", "26"] as const;
 
@@ -33,95 +34,23 @@ interface DayRecipe {
   recipe: Recipe;
 }
 
-interface CalendarDayProps {
-  day: DayOfWeek;
-  date: Date;
-  top: number;
-}
-
-const CalendarDay: React.FC<CalendarDayProps> = ({ day, date, top }) => (
-  <View style={[styles.dayContainer, { top }]}>
-    <Text style={styles.dayText}>{day}</Text>
-    <Text style={styles.dateText}>{date}</Text>
-  </View>
-);
-
-interface EventCardProps {
-  day: DayOfWeek;
-  top: number;
-  title?: string;
-  time?: string;
-  onAdd?: () => void;
-  onDelete?: () => void;
-}
-
-const EventCard: React.FC<EventCardProps> = ({
-  day,
-  top,
-  title,
-  time,
-  onAdd,
-  onDelete,
-}) => {
-  const dayBackgrounds = {
-    Sun: require("../images/SunColorBox.png"),
-    Mon: require("../images/MonColorBox.png"),
-    Tue: require("../images/TueColorBox.png"),
-    Wed: require("../images/WedColorBox.png"),
-    Thu: require("../images/ThuColorBox.png"),
-    Fri: require("../images/FriColorBox.png"),
-    Sat: require("../images/SatColorBox.png"),
-  };
-
-  return (
-    <View style={[styles.eventContainer, { top }]}>
-      <Image
-        style={styles.eventBackground}
-        resizeMode="cover"
-        source={dayBackgrounds[day]}
-      />
-      {title && time ? (
-        <>
-          <Text style={styles.eventText}>
-            <Text style={styles.eventTitle}>{title}</Text>
-            <Text style={styles.eventTime}>{time}</Text>
-          </Text>
-          <TouchableOpacity style={styles.actionButton} onPress={onDelete}>
-            <Image
-              style={styles.icon}
-              resizeMode="cover"
-              source={require("../images/delete.png")}
-            />
-          </TouchableOpacity>
-        </>
-      ) : (
-        <TouchableOpacity style={styles.actionButton} onPress={onAdd}>
-          <Image
-            style={styles.icon}
-            resizeMode="cover"
-            source={require("../images/add.png")}
-          />
-        </TouchableOpacity>
-      )}
-    </View>
-  );
-};
-
 const DinnerCard: React.FC = () => (
   <View style={styles.dinnerCard}>
     <Text style={styles.tonightsDinner}>Tonight's Dinner!</Text>
-    <Image
-      style={styles.dinnerImage}
-      resizeMode="cover"
-      source={require("../images/pastapic.png")}
-    />
-    <View style={styles.recipeButton}>
-      <ThemedButton title="Recipe"></ThemedButton>
+    <View style={styles.dinnerContent}>
+      <Image
+        style={styles.dinnerImage}
+        resizeMode="cover"
+        source={require("../images/pastapic.png")}
+      />
+      <View style={styles.dinnerInfo}>
+        <Text style={styles.dinnerTitle}>Creamy Pesto Chicken Pasta</Text>
+        <Text style={styles.cookTime}>Cook time: 25 min</Text>
+        <View style={styles.recipeButton}>
+          <ThemedButton title="Recipe" />
+        </View>
+      </View>
     </View>
-    <Text style={styles.dinnerDescription}>
-      <Text style={styles.dinnerTitle}>Creamy Pesto Chicken Pasta{"\n"}</Text>
-      <Text style={styles.cookTime}>Cook time: 25 min</Text>
-    </Text>
   </View>
 );
 
@@ -186,10 +115,9 @@ const CalendarPage: React.FC = () => {
           <ThemedButton
             title="Group"
             onPress={() => router.push("/GroupPage")}
-          ></ThemedButton>
+          />
         </View>
         <DinnerCard />
-
         <View style={styles.calendarContainer}>
           <SwipeableBoxes />
         </View>
@@ -207,35 +135,31 @@ const CalendarPage: React.FC = () => {
   );
 };
 
+const { width, height } = Dimensions.get("window");
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#f3ede4",
   },
-  scrollViewContent: {
-    flexGrow: 1,
-    alignItems: "center",
-  },
   contentContainer: {
-    alignItems: "center",
-    justifyContent: "center",
     flex: 1,
-    //padding: 20,
+    alignItems: "center",
   },
   pageTitle: {
     fontFamily: "InterBold",
     fontSize: 24,
     color: "#222222",
     flex: 1,
-    //paddingLeft: 20,
   },
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginTop: 20,
-    marginLeft: 20,
-    marginRight: 20,
+    width: "100%",
+    paddingHorizontal: 20,
+    paddingTop: 20,
+    paddingBottom: 10,
   },
   buttonText: {
     fontFamily: FontFamily.interSemiBold,
@@ -246,43 +170,31 @@ const styles = StyleSheet.create({
     color: Color.colorWhite,
   },
   dinnerCard: {
-    width: 342,
-    height: 126,
+    width: "90%",
     backgroundColor: "#e2dacc",
     borderRadius: Border.br_base,
-    padding: 12,
-    marginTop: 5,
+    padding: 10,
+    marginBottom: 10,
+  },
+  dinnerContent: {
+    flexDirection: "row",
+    alignItems: "center",
   },
   tonightsDinner: {
     fontFamily: FontFamily.interBold,
     fontWeight: "700",
     fontSize: FontSize.size_base,
     color: Color.colorGray,
+    marginBottom: 5,
   },
   dinnerImage: {
-    width: 115,
-    height: 85,
+    width: width * 0.2,
+    height: width * 0.2,
     borderRadius: Border.br_3xs,
-    position: "absolute",
-    left: 17,
-    top: 31,
   },
-  recipeButton: {
-    position: "absolute",
-    left: 143,
-    top: 79,
-    width: 83,
-    height: 30,
-    borderRadius: Border.br_81xl,
-    backgroundColor: Color.colorDarkslategray_100,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  dinnerDescription: {
-    position: "absolute",
-    left: 143,
-    top: 37,
-    width: 196,
+  dinnerInfo: {
+    marginLeft: 10,
+    flex: 1,
   },
   dinnerTitle: {
     fontFamily: FontFamily.interRegular,
@@ -295,77 +207,15 @@ const styles = StyleSheet.create({
     fontFamily: FontFamily.interLight,
     fontSize: FontSize.size_xs,
     color: Color.colorGray,
+    marginTop: 2,
+  },
+  recipeButton: {
+    marginTop: 5,
   },
   calendarContainer: {
     backgroundColor: "#3b4937",
     flex: 1,
-  },
-  daysContainer: {
-    position: "absolute",
-    top: 0,
-    left: 14,
-    height: 501,
-    width: 28,
-  },
-  dayContainer: {
-    position: "absolute",
-    left: 0,
-    width: 28,
-    alignItems: "center",
-  },
-  dayText: {
-    color: Color.colorGainsboro,
-    fontFamily: FontFamily.interMedium,
-    fontWeight: "500",
-    fontSize: FontSize.size_xs,
-  },
-  dateText: {
-    color: Color.colorGainsboro,
-    fontFamily: FontFamily.interMedium,
-    fontWeight: "500",
-    fontSize: FontSize.size_xl,
-  },
-  eventContainer: {
-    position: "absolute",
-    left: 48,
-    width: 280,
-    height: 66,
-    overflow: "hidden",
-  },
-  eventBackground: {
-    position: "absolute",
     width: "100%",
-    height: "100%",
-    borderRadius: Border.br_3xs,
-  },
-  eventText: {
-    position: "absolute",
-    left: 25,
-    top: 10,
-    width: 196,
-    color: Color.colorGray,
-  },
-  eventTitle: {
-    fontSize: FontSize.size_base,
-    fontFamily: FontFamily.interMedium,
-    fontWeight: "500",
-  },
-  eventTime: {
-    fontStyle: "italic",
-    fontWeight: "300",
-    fontFamily: FontFamily.interLight,
-    fontSize: FontSize.size_xs,
-  },
-  actionButton: {
-    position: "absolute",
-    right: 10,
-    top: 10,
-    width: 18,
-    height: 18,
-  },
-  icon: {
-    width: "100%",
-    height: "100%",
   },
   modalOverlay: {
     flex: 1,
@@ -377,9 +227,7 @@ const styles = StyleSheet.create({
     borderRadius: 24,
     backgroundColor: "#e2dacc",
     width: 300,
-    height: 169,
-    overflow: "hidden",
-    justifyContent: "center",
+    padding: 20,
     alignItems: "center",
   },
   areYouSure: {
@@ -393,7 +241,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    width: "80%",
+    width: "100%",
   },
   button: {
     width: 100,

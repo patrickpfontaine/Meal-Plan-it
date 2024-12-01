@@ -18,7 +18,7 @@ import {
   faBookmark,
 } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "expo-router";
-import { useRecipeContext } from "./config/RecipeContext";
+import { useRecipeContext } from "../config/RecipeContext";
 import { MealDisplayBox } from "@/components/MealDisplayBox";
 
 interface Recipe {
@@ -66,7 +66,7 @@ const SavedRecipes: React.FC = () => {
         <Image
           //style={styles.bookmarkButton}
           resizeMode="cover"
-          source={require("./images/delete.png")}
+          source={require("../images/delete.png")}
         />
       </TouchableOpacity>
     </View>
@@ -107,7 +107,7 @@ const SavedRecipes: React.FC = () => {
             <Text style={styles.noRecipesText}>
               {searchQuery
                 ? "No saved recipes match your search"
-                : "No saved recipes yet. Try saving some recipes from the search page!"}
+                : "No saved recipes yet...\nTry saving some recipes from the search page!"}
             </Text>
           </View>
         ) : (

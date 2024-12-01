@@ -4,6 +4,7 @@ import { faCalendar } from "@fortawesome/free-regular-svg-icons";
 import {
   faBasketShopping,
   faBookBookmark,
+  faMagnifyingGlass,
 } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
 
@@ -49,6 +50,22 @@ export default function TabsLayout() {
       />
       <Tabs.Screen
         name="RecipeSearch"
+        options={{
+          headerShown: false,
+          tabBarLabel: () => null,
+          tabBarActiveTintColor: "#306090",
+          tabBarInactiveTintColor: "gray",
+          tabBarIcon: ({ color, size }) => (
+            <FontAwesomeIcon
+              icon={faMagnifyingGlass}
+              color={color}
+              size={size}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="SavedRecipes"
         options={{
           headerShown: false,
           tabBarLabel: () => null,

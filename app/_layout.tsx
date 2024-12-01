@@ -21,7 +21,7 @@ export default function RootLayout() {
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="addRecipe" options={{ headerShown: false }} />
-        <Stack.Screen name="SavedRecipes" options={{ headerShown: false }} />
+
         <Stack.Screen name="SignIn" options={{ headerShown: false }} />
         <Stack.Screen name="SignUp" options={{ headerShown: false }} />
         <Stack.Screen name="GroupPage" options={{ headerShown: false }} />
