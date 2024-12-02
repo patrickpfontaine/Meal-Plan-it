@@ -9,6 +9,8 @@ import {
   FlatList,
   Image,
   ListRenderItem,
+  Linking,
+  Alert,
 } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { ThemedButton } from "@/components/Button";
@@ -74,6 +76,16 @@ const AddRecipe: React.FC = () => {
       await AsyncStorage.setItem("@grocery_list", JSON.stringify(groceryList));
     } catch (e) {
       console.error("Failed to update grocery list:", e);
+    }
+  };
+  const handleRecipePress = (recipe: any) => {
+    const recipeUrl = recipe.sourceUrl;
+    if (recipeUrl) {
+      Linking.openURL(recipeUrl).catch((err) =>
+        Alert.alert("Error", "Failed to open the recipe URL.")
+      );
+    } else {
+      Alert.alert("Error", "Recipe URL not available");
     }
   };
 

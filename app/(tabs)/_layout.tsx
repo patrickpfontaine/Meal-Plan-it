@@ -17,6 +17,9 @@ export default function TabsLayout() {
           elevation: 0,
           shadowOpacity: 0,
           borderTopWidth: 0,
+          justifyContent: "center",
+          alignItems: "center",
+          paddingTop: 4,
         },
       }}
     >

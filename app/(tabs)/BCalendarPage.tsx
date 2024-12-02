@@ -14,6 +14,7 @@ import { Border, Color, FontFamily, FontSize } from "../GlobalStyles";
 import { useRecipeContext } from "../config/RecipeContext";
 import { ThemedButton } from "@/components/Button";
 import SwipeableBoxes from "@/components/SwipeableComp";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 
 const DAYS_OF_WEEK = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"] as const;
 const DATES = ["27", "28", "29", "30", "31", "1", "26"] as const;
@@ -29,28 +30,21 @@ interface Recipe {
   servings: number;
 }
 
-interface DayRecipe {
-  day: string;
-  recipe: Recipe;
-}
-
 const DinnerCard: React.FC = () => (
   <View style={styles.dinnerCard}>
-    <Text style={styles.tonightsDinner}>Tonight's Dinner!</Text>
-    <View style={styles.dinnerContent}>
-      <Image
-        style={styles.dinnerImage}
-        resizeMode="cover"
-        source={require("../images/pastapic.png")}
-      />
-      <View style={styles.dinnerInfo}>
-        <Text style={styles.dinnerTitle}>Creamy Pesto Chicken Pasta</Text>
-        <Text style={styles.cookTime}>Cook time: 25 min</Text>
+    <View style={{ flexDirection: "row", width: "80%" }}>
+      <Text style={styles.tonightsDinner}>
+        Tonight's Dinner! {"\n"}
         <View style={styles.recipeButton}>
           <ThemedButton title="Recipe" />
         </View>
-      </View>
+      </Text>
+      <Text style={styles.dinnerTitle}>
+        Creamy Pesto Chicken Pasta {"\n"}
+        <Text style={styles.cookTime}>Cook time: 25 min</Text>
+      </Text>
     </View>
+    <View style={{ flexDirection: "row", width: "80%" }}></View>
   </View>
 );
 
@@ -86,18 +80,6 @@ const CalendarPage: React.FC = () => {
   const { dayRecipes, removeRecipeFromDay } = useRecipeContext();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedDay, setSelectedDay] = useState<DayOfWeek | null>(null);
-
-  const handleAdd = (day: DayOfWeek) => {
-    router.push({
-      pathname: "/addRecipe",
-      params: { day: day },
-    });
-  };
-
-  const handleDelete = (day: DayOfWeek) => {
-    setSelectedDay(day);
-    setShowDeleteModal(true);
-  };
 
   const confirmDelete = () => {
     if (selectedDay) {
@@ -174,7 +156,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#e2dacc",
     borderRadius: Border.br_base,
     padding: 10,
-    marginBottom: 10,
+    paddingBottom: 3,
   },
   dinnerContent: {
     flexDirection: "row",
@@ -200,6 +182,8 @@ const styles = StyleSheet.create({
     fontFamily: FontFamily.interRegular,
     fontSize: FontSize.size_sm,
     color: Color.colorGray,
+    marginLeft: 15,
+    marginTop: 2,
   },
   cookTime: {
     fontStyle: "italic",
@@ -210,7 +194,8 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
   recipeButton: {
-    marginTop: 5,
+    padding: 5,
+    paddingLeft: 15,
   },
   calendarContainer: {
     backgroundColor: "#3b4937",
