@@ -69,8 +69,9 @@ export function MealDisplayBox({ recipes }: MealDisplayBoxProps) {
                   >
                     <FontAwesomeIcon
                       icon={isBookmark(item) ? solidBookmark : regularBookmark}
+                      size={20}
                       style={{
-                        color: isBookmark(item) ? "#EFBF17" : "#222222",
+                        color: isBookmark(item) ? "#F16C00" : "#222222",
                       }}
                     />
                   </TouchableOpacity>
