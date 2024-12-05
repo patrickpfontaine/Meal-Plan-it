@@ -76,8 +76,9 @@ const SignIn = () => {
       </TouchableOpacity>
 
       {/* Welcome Text */}
-      <Text style={styles.welcome}>Welcome!</Text>
-
+      <View style={styles.container}>
+        <Text style={styles.welcome}>Welcome!</Text>
+      </View>
       {/* Logo */}
       <Image
         style={styles.logo}
@@ -211,6 +212,11 @@ const styles = StyleSheet.create({
     fontFamily: "InterBold",
     color: Color.colorGray,
     textAlign: "center",
+  },
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
   logo: {
     position: "absolute",
