@@ -241,8 +241,8 @@ const styles = StyleSheet.create({
   welcome: {
     position: "absolute",
     top: "50%",
-    left: "50%",
-    transform: [{ translateX: -100 }],
+    // left: "50%",
+    // transform: [{ translateX: -100 }],
     marginTop: -82,
     fontSize: 24,
     fontWeight: "700",
