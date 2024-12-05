@@ -104,8 +104,9 @@ const SignUp = () => {
       </TouchableOpacity>
 
       {/* Welcome Text */}
-      <Text style={styles.welcome}>Create an account!</Text>
-
+      <View style={styles.container}>
+        <Text style={styles.welcome}>Create an account!</Text>
+      </View>
       {/* Logo */}
       <Image
         style={styles.logo}
@@ -231,6 +232,11 @@ const styles = StyleSheet.create({
     fontFamily: FontFamily.interMedium,
     fontWeight: "500",
     fontSize: FontSize.size_sm,
+  },
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
   welcome: {
     position: "absolute",
